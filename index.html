@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marffin — Saúde e Bem-Estar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #fffdfe;
+      --bg: #714528;
+      --accent: #9a5b3c;
+      --dark: #fffdfe;
+      --muted: #d4c5b8;
+      --radius: 24px;
+      --container: 1200px;
+      --card-bg: #8b5a3c;
+      --text-light: #e8d9d0;
+      --blue-dark: #0a1d37;
+      --blue-light: #00d4ff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--dark);
+      scroll-behavior: smooth;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ANIMAÇÕES GERAIS */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    .animate-fadeInUp {
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    /* HEADER */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(113, 69, 40, 0.95);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    header .container {
+      display: flex; justify-content: space-between; align-items: center; padding: 16px 20px;
+    }
+    .header-logo {
+      height: 70px; width: auto; transition: 0.3s; object-fit: contain;
+    }
+    .header-logo:hover { transform: scale(1.05); }
+    .nav-desktop ul { display: flex; gap: 20px; list-style: none; }
+    .nav-desktop a { color: var(--dark); font-weight: 600; text-decoration: none; transition: 0.3s; font-size: 16px; }
+    .nav-desktop a:hover { color: var(--accent); transform: translateY(-2px); }
+    .menu-toggle { display: none; font-size: 28px; cursor: pointer; color: var(--primary); background: none; border: none; }
+    .menu-toggle i { font-size: 28px; }
+
+    /* MENU MOBILE */
+    .nav-mobile {
+      display: none;
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      background: rgba(113, 69, 40, 0.98);
+      padding: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      border-radius: 0 0 16px 16px;
+      backdrop-filter: blur(10px);
+      z-index: 49;
+    }
+    .nav-mobile.active { display: block; }
+    .nav-mobile ul { flex-direction: column; gap: 12px; list-style: none; }
+    .nav-mobile a {
+      display: block; color: var(--primary); font-weight: 600; font-size: 18px;
+      text-decoration: none; padding: 14px 20px; border-radius: 12px;
+      background: rgba(255,255,255,0.1); transition: all 0.3s ease; text-align: center;
+    }
+    .nav-mobile a:hover {
+      background: rgba(255,255,255,0.2); transform: translateX(8px);
+    }
+    .nav-mobile .close-menu {
+      position: absolute; top: 16px; right: 20px; color: var(--primary);
+      font-size: 24px; cursor: pointer; background: rgba(255,255,255,0.2);
+      width: 36px; height: 36px; border-radius: 50%; display: flex;
+      align-items: center; justify-content: center; transition: 0.3s;
+    }
+    .nav-mobile .close-menu:hover { background: rgba(255,255,255,0.3); }
+
+    /* HERO */
+    #home {
+      background: #5a3825 url('https://i.postimg.cc/KvMfrRn1/Design-sem-nome-(3).jpg') center/cover no-repeat;
+      min-height: 100vh; display: flex; align-items: center; padding: 140px 5% 100px;
+    }
+    .hero-content { max-width: 700px; margin-left: 10%; text-align: left; }
+    .hero h1 { font-size: 36px; font-weight: 800; margin-bottom: 16px; line-height: 1.2; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+    .hero p { font-size: 18px; color: #e8d9d0; margin-bottom: 24px; text-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+    .counter-container { display: flex; align-items: baseline; gap: 8px; font-weight: 800; color: #fff; margin-bottom: 24px; text-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+    .counter-plus, .counter-number, .counter-suffix { font-size: 32px; line-height: 1; }
+    .counter-suffix { color: #e8d9d0; font-weight: 600; }
+    .btn { display: inline-block; padding: 16px 36px; background: #fff; color: var(--bg); border-radius: 50px; font-weight: 700; font-size: 18px; text-decoration: none; transition: 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .btn:hover { background: var(--accent); color: #fff; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+
+    /* SERVIÇOS */
+    #servicos {
+      background: rgba(113, 69, 40, 0.95); padding: 100px 20px; text-align: center;
+    }
+    .section-content { max-width: var(--container); margin: 0 auto; }
+    .section-title {
+      font-size: 42px; font-weight: 800; color: var(--primary); margin-bottom: 20px;
+      position: relative; display: inline-block;
+    }
+    .section-title::after {
+      content: ''; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%);
+      width: 80px; height: 4px; background: var(--accent); border-radius: 2px;
+    }
+    .section-subtitle { font-size: 19px; color: var(--text-light); max-width: 800px; margin: 0 auto 50px; line-height: 1.7; font-weight: 400; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px; margin-top: 40px; }
+    .card { 
+      background: var(--card-bg); padding: 32px 24px; border-radius: var(--radius); 
+      box-shadow: 0 8px 25px rgba(0,0,0,0.25); transition: all 0.4s ease; color: #fff; 
+      text-align: center; border: 1px solid rgba(255,255,255,0.1); opacity: 0; transform: translateY(20px);
+    }
+    .card.animate { opacity: 1; transform: translateY(0); }
+    .card:hover { transform: translateY(-10px); box-shadow: 0 16px 35px rgba(0,0,0,0.35); background: #9a5b3c; }
+    .card h3 { color: var(--primary); margin-bottom: 14px; font-size: 20px; font-weight: 700; }
+    .card p { color: #f0e6e0; font-size: 15.5px; line-height: 1.6; }
+
+    /* BOTÃO NO FINAL DOS SERVIÇOS */
+    .servicos-cta {
+      margin-top: 50px;
+      animation-delay: 0.6s;
+    }
+
+    /* COMO FUNCIONA */
+    #como-funciona {
+      background: rgba(113, 69, 40, 0.95);
+      padding: 120px 20px;
+      color: white;
+    }
+    .como-title { font-size: 38px; font-weight: 800; color: var(--primary); text-align: center; margin-bottom: 80px; }
+    .como-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .steps-list { position: relative; padding-left: 0; }
+    .steps-list::before { content: ''; position: absolute; left: 25px; top: 25px; height: 450px; width: 3px; background: #ffffff; z-index: 1; }
+    .step { display: flex; gap: 20px; margin-bottom: 50px; align-items: flex-start; position: relative; z-index: 2; opacity: 0; transform: translateX(-30px); }
+    .step.animate { opacity: 1; transform: translateX(0); transition: all 0.6s ease; }
+    .step:last-child { margin-bottom: 0; }
+    .step-number { width: 50px; height: 50px; background: #ffffff; color: #714528; font-weight: 800; font-size: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 0 15px rgba(255,255,255,0.3); position: relative; z-index: 2; }
+    .step-content h3 { color: #ffffff; font-size: 20px; margin-bottom: 8px; font-weight: 600; }
+    .step-content p { color: #e8d9d0; font-size: 16px; line-height: 1.6; }
+    .como-image { text-align: center; }
+    .como-image img { max-width: 100%; height: auto; max-height: 600px; object-fit: cover; border-radius: 16px; box-shadow: 0 12px 30px rgba(0,0,0,0.3); transition: transform 0.3s ease; }
+    .como-image img:hover { transform: translateY(-6px); }
+
+    /* FAQ */
+    #faq { background: url('https://i.postimg.cc/PJsqZ3Wm/Design-sem-nome-(1).jpg') center/cover no-repeat; padding: 100px 20px; }
+    #faq .section-title { font-size: 32px; font-weight: 800; color: var(--primary); text-align: center; margin: 0 auto 60px; position: relative; display: block; text-shadow: 0 2px 6px rgba(0,0,0,0.5); }
+    #faq .section-title::after { content: ''; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background: var(--accent); border-radius: 2px; }
+    .faq-item { background: rgba(139,90,60,0.95); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.1); padding: 22px 28px; border-radius: var(--radius); box-shadow: 0 6px 18px rgba(0,0,0,0.3); margin-bottom: 18px; cursor: pointer; transition: all 0.3s ease; color: #fff; max-width: 800px; margin-left: auto; margin-right: auto; overflow: hidden; }
+    .faq-item:hover { transform: translateY(-4px); background: rgba(154,91,60,0.95); }
+    .faq-item h4 { color: var(--primary); margin: 0; display: flex; justify-content: space-between; align-items: center; font-size: 18px; font-weight: 600; }
+    .faq-plus { font-size: 24px; transition: transform 0.3s ease; color: var(--primary); }
+    .faq-item.active .faq-plus { transform: rotate(45deg); }
+    .faq-item p { max-height: 0; opacity: 0; overflow: hidden; transition: all 0.4s ease; margin-top: 0; color: #f0e6e0; font-size: 16px; line-height: 1.7; padding: 0 20px; }
+    .faq-item.active p { max-height: 300px; opacity: 1; margin-top: 18px; padding: 0 20px 20px; }
+
+    /* RESTO DAS SEÇÕES */
+    #por-que-marffin { background: #f5f0e8; padding: 100px 20px; text-align: center; }
+    #por-que-marffin .section-title { font-size: 36px; font-weight: 800; color: #5a3825; margin-bottom: 16px; position: relative; display: inline-block; }
+    #por-que-marffin .section-title::after { content: ''; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background: #9a5b3c; border-radius: 2px; }
+    .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; max-width: 1200px; margin: 60px auto 0; }
+    .benefit-item { text-align: center; opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+    .benefit-item.animate { opacity: 1; transform: translateY(0); }
+    .benefit-icon { width: 70px; height: 70px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 32px; color: #9a5b3c; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
+    .benefit-item h3 { font-size: 18px; font-weight: 700; color: #5a3825; margin-bottom: 12px; }
+    .benefit-item p { font-size: 15px; color: #6b4a30; line-height: 1.6; max-width: 260px; margin: 0 auto; }
+
+    #modalidades-marffin { background: #f5f0e8; padding: 80px 20px 120px; }
+    #modalidades-marffin .section-content { max-width: 1200px; margin: 0 auto; text-align: center; }
+    #modalidades-marffin .section-title { font-size: 36px; font-weight: 800; color: #5a3825; margin-bottom: 16px; }
+    #modalidades-marffin .section-subtitle { font-size: 18px; color: #6b4a30; max-width: 800px; margin: 0 auto 50px; line-height: 1.7; }
+    .plan-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 30px; margin-top: 40px; }
+    .plan-card { background: #5a3825; color: white; border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 12px 30px rgba(0,0,0,0.2); transition: transform 0.3s ease; opacity: 0; transform: translateY(30px); }
+    .plan-card.animate { opacity: 1; transform: translateY(0); }
+    .plan-card:hover { transform: translateY(-8px); }
+    .plan-card img { width: 100%; height: 220px; object-fit: cover; }
+    .plan-content { padding: 32px; position: relative; }
+    .plan-title { font-size: 24px; font-weight: 800; margin-bottom: 16px; color: #fffdfe; }
+    .plan-content p { font-size: 16px; line-height: 1.7; margin-bottom: 20px; color: #e8d9d0; }
+    .plan-price { display: flex; align-items: center; gap: 8px; font-size: 16px; color: #d4a574; margin-bottom: 8px; }
+    .plan-price i { color: #d4a574; }
+
+    #cartao-marffin { background: #5a3825 url('https://i.postimg.cc/HxYQ0YbF/Design-sem-nome-(9).jpg') right center/cover no-repeat; padding: 120px 5%; position: relative; }
+    .cartao-content { background: rgba(90,56,37,0.9); padding: 50px; border-radius: 20px; max-width: 600px; backdrop-filter: blur(4px); }
+    .cartao-logo { height: 50px; margin-bottom: 20px; }
+    .cartao-title { font-size: 32px; font-weight: 800; color: white; margin-bottom: 16px; line-height: 1.3; }
+    .cartao-subtitle { font-size: 18px; color: #e8d9d0; margin-bottom: 32px; }
+    .btn-cartao { display: inline-flex; align-items: center; gap: 12px; background: #d4a574; color: #5a3825; padding: 16px 32px; border-radius: 50px; font-weight: 700; font-size: 18px; text-decoration: none; transition: 0.3s; }
+    .btn-cartao:hover { background: #e6c9a8; transform: translateY(-2px); }
+
+    #sobre { background: rgba(113, 69, 40, 0.95); padding: 100px 20px; }
+    .sobre-container { max-width: var(--container); margin: 0 auto; }
+    .sobre-content { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .sobre-text { text-align: left; padding-right: 20px; }
+    .sobre-text h2 { font-size: 36px; margin-bottom: 24px; color: var(--primary); }
+    .sobre-text h3 { font-size: 24px; margin: 20px 0 12px; color: var(--primary); }
+    .sobre-text p { font-size: 16px; line-height: 1.7; color: #e8d9d0; margin-bottom: 16px; }
+    .sobre-image { display: flex; justify-content: flex-end; }
+    .sobre-image img { max-width: 520px; width: 100%; height: auto; border-radius: 20px; box-shadow: 0 12px 30px rgba(0,0,0,0.3); transition: all 0.3s ease; filter: brightness(0.95); }
+    .sobre-image img:hover { transform: translateY(-6px); filter: brightness(1); box-shadow: 0 18px 40px rgba(0,0,0,0.4); }
+
+    #whatsapp-cta { background: center/cover no-repeat; padding: 120px 20px; text-align: center; color: white; }
+    #whatsapp-cta h2 { font-size: 36px; font-weight: 800; margin-bottom: 20px; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+    #whatsapp-cta p { font-size: 18px; color: #e8d9d0; max-width: 600px; margin: 0 auto 32px; text-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+    .btn-whatsapp { display: inline-flex; align-items: center; gap: 12px; background: #25D366; color: white; padding: 18px 36px; border-radius: 50px; font-weight: 700; font-size: 20px; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 6px 20px rgba(37,211,102,0.4); }
+    .btn-whatsapp:hover { background: #128C7E; transform: translateY(-4px); box-shadow: 0 10px 30px rgba(37,211,102,0.5); }
+
+    /* FOOTER */
+    footer { background: url('https://i.postimg.cc/PJsqZ3Wm/Design-sem-nome-(1).jpg') center/cover no-repeat; color: #f0e6e0; padding: 40px 20px; text-align: center; position: relative; }
+    footer .copyright, footer .socials a { color: #ffffff; text-shadow: 0 1px 3px rgba(0,0,0,0.6); }
+    footer .socials a:hover { color: #ddd; text-shadow: 0 1px 5px rgba(0,0,0,0.8); }
+    .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 16px; max-width: var(--container); margin: 0 auto; }
+    .copyright { font-size: 15px; color: #ccc; margin-bottom: 8px; }
+    .socials { display: flex; gap: 20px; }
+    .socials a { color: white; font-size: 32px; transition: 0.3s; }
+    .socials a:hover { color: #ddd; transform: scale(1.2); }
+
+    /* BOTÃO WHATSAPP FLUTUANTE */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #25D366;
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      animation: pulse 2s infinite;
+      text-decoration: none !important;
+}
+    }
+    .whatsapp-float:hover {
+      background: #128C7E;
+      transform: scale(1.1);
+      animation: none;
+    }
+
+    @media (max-width: 992px) {
+      .como-container { grid-template-columns: 1fr; gap: 50px; text-align: center; }
+      .steps-list::before { left: 25px; height: 350px; }
+      .step { justify-content: center; }
+      .como-image img { max-height: 500px; }
+      .sobre-content { grid-template-columns: 1fr; gap: 50px; text-align: center; }
+      .sobre-text { padding-right: 0; }
+      .sobre-image { justify-content: center; }
+      .sobre-image img { max-width: 420px; }
+    }
+    @media (max-width: 768px) {
+      .nav-desktop { display: none; }
+      .menu-toggle { display: block; }
+      .header-logo { height: 60px; }
+      .hero-content { margin-left: 5%; max-width: 90%; }
+      #home, #servicos, #como-funciona, #sobre, #faq, #whatsapp-cta { padding: 80px 20px; }
+      .section-title, .como-title { font-size: 32px; }
+      .section-title::after { width: 60px; height: 3px; }
+      .steps-list::before { left: 20px; height: 340px; }
+      .step-number { width: 45px; height: 45px; font-size: 22px; }
+      .step-content h3 { font-size: 18px; }
+      .como-image img { max-height: 400px; }
+      .cartao-content { padding: 40px 20px; }
+      .cartao-title { font-size: 28px; }
+      .socials a { font-size: 28px; }
+      .benefits-grid { gap: 30px; }
+      .benefit-icon { width: 60px; height: 60px; font-size: 28px; }
+      .plan-card img { height: 180px; }
+      .whatsapp-float { width: 55px; height: 55px; font-size: 28px; bottom: 20px; right: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BOTÃO WHATSAPP FLUTUANTE -->
+  <a href="https://api.whatsapp.com/send/?phone=5551985186309" target="_blank" class="whatsapp-float">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container">
+      <a href="#home">
+        <img src="https://i.postimg.cc/1tZg9ZGb/Marffin-Saude.png" alt="Logo Marffin" class="header-logo">
+      </a>
+      <nav class="nav-desktop">
+        <ul>
+          <li><a href="#home">Início</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#como-funciona">Como Funciona</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#whatsapp-cta">Contato</a></li>
+        </ul>
+      </nav>
+      <button class="menu-toggle" aria-label="Abrir menu">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav class="nav-mobile">
+        <span class="close-menu">X</span>
+        <ul>
+          <li><a href="#home">Início</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#como-funciona">Como Funciona</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#whatsapp-cta">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="home" class="animate-fadeInUp">
+    <div class="hero-content">
+      <h1>Cuidando da sua saúde com especialistas que se identificam com você.</h1>
+      <p>Atendimento humanizado para população que mais precisa de saúde.</p>
+      <div class="counter-container">
+        <span class="counter-plus">+</span>
+        <span class="counter-number" id="counter">0</span>
+        <span class="counter-suffix">pacientes</span>
+      </div>
+      <a href="https://api.whatsapp.com/send/?phone=5551985186309" target="_blank" class="btn">Agendar minha consulta</a>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section id="servicos">
+    <div class="section-content">
+      <h2 class="section-title animate-fadeInUp">Serviços</h2>
+      <p class="section-subtitle animate-fadeInUp">Cuide da sua saúde e alcance seus objetivos com a nossa ajuda.</p>
+      <div class="grid">
+        <div class="card"><h3>Saúde Bucal</h3><p>Cuidar da boca previne cáries, gengivite e doenças que afetam todo o corpo. Escovação correta, fio dental e visitas ao dentista são essenciais.</p></div>
+        <div class="card"><h3>Clínica Geral</h3><p>Nossos médicos estão prontos para fornecer cuidados para todas as idades e doenças comuns.</p></div>
+        <div class="card"><h3>Geriatria</h3><p>É a área que cuida da saúde da pessoa idosa, promovendo autonomia, prevenção de doenças e qualidade de vida no envelhecimento.</p></div>
+        <div class="card"><h3>Nutrição</h3><p>Alimentação equilibrada fortalece o corpo, previne doenças e melhora o bem-estar. O nutricionista ajuda a personalizar escolhas saudáveis.</p></div>
+        <div class="card"><h3>Home Care</h3><p>Atendimento de saúde no conforto do lar, oferecendo cuidado contínuo, humanizado e seguro para pacientes que precisam de suporte especializado.</p></div>
+        <div class="card"><h3>Pediatria</h3><p>Cuide da saúde dos seus filhos com nossos pediatras experientes e compassivos.</p></div>
+        <div class="card"><h3>Coworking para profissionais da saúde</h3><p>Consultórios compartilhados que reduzem custos, oferecem estrutura pronta e facilitam networking entre profissionais.</p></div>
+        <div class="card"><h3>Saúde Mental</h3><p>Envolve equilíbrio emocional e bem-estar. Cuidar da saúde mental ajuda a lidar com o estresse e fortalece a qualidade de vida.</p></div>
+      </div>
+      <!-- BOTÃO NO FINAL DOS SERVIÇOS -->
+      <div class="servicos-cta animate-fadeInUp">
+        <a href="https://api.whatsapp.com/send/?phone=5551985186309" target="_blank" class="btn">Agendar minha consulta</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section id="como-funciona">
+    <h2 class="como-title animate-fadeInUp">Como funciona:</h2>
+    <div class="como-container">
+      <div class="steps-list">
+        <div class="step"><div class="step-number">1</div><div class="step-content"><h3>Passo 1</h3><p>Faremos a análise inicial de sua necessidade via WhatsApp.</p></div></div>
+        <div class="step"><div class="step-number">2</div><div class="step-content"><h3>Passo 2</h3><p>Recebemos seus documentos necessários para o Ato desejado, via WhatsApp, e-mail ou nosso serviço de courier.</p></div></div>
+        <div class="step"><div class="step-number">3</div><div class="step-content"><h3>Passo 3</h3><p>Se o serviço que você solicitar depender da análise e/ou recebimento físico do documento, nosso serviço de courier fará a recolha/devolução do documento no local que você desejar.</p></div></div>
+        <div class="step"><div class="step-number">4</div><div class="step-content"><h3>Passo 4</h3><p>Agendamento de uma videoconferência com o advogado especialista, se o serviço que você solicitar depender da análise e/ou atuação de um cartório/conservatória competente.</p></div></div>
+      </div>
+      <div class="como-image">
+        <img src="https://i.postimg.cc/RFMvhp2p/Design-sem-nome-(11).png" alt="Como funciona a Marffin">
+      </div>
+    </div>
+  </section>
+
+  <!-- RESTANTE DO SITE (mantido igual, com animações aplicadas onde necessário) -->
+  <!-- [CARTÃO, POR QUE MARFFIN, MODALIDADES, SOBRE, FAQ, CTA, FOOTER] -->
+
+  <!-- CARTÃO MARFFIN -->
+  <section id="cartao-marffin" class="animate-fadeInUp">
+    <div class="cartao-content">
+      <img src="https://i.ibb.co/zVdcXK2p/Logo-Marffin-transparente.png" alt="Marffin" class="cartao-logo">
+      <h2 class="cartao-title">Conheça o Cartão Marffin, com ele cuidar da sua saúde nunca foi tão fácil</h2>
+      <p class="cartao-subtitle">
+        Experimente o mais alto nível de dedicação, com descontos que cabem no seu bolso. Aproveite esses benefícios para cuidar da sua saúde e bem estar.
+      </p>
+      <a href="https://api.whatsapp.com/send/?phone=5551985186309&text=Olá%2C+vim+pelo+site+dos+Cartões+Marffin+e+gostaria+de+saber+mais...&type=phone_number&app_absent=0" target="_blank" class="btn-cartao">
+        <i class="fab fa-whatsapp"></i> Entrar em Contato
+      </a>
+    </div>
+  </section>
+
+  <!-- POR QUE MARFFIN -->
+  <section id="por-que-marffin">
+    <div class="section-content">
+      <h2 class="section-title animate-fadeInUp">Por que escolher o Cartão Marffin?</h2>
+      <div class="benefits-grid">
+        <div class="benefit-item"><div class="benefit-icon"><i class="fas fa-stethoscope"></i></div><h3>Desconto em Consultas Médicas</h3><p>Economize em suas consultas médicas.</p></div>
+        <div class="benefit-item"><div class="benefit-icon"><i class="fas fa-smile"></i></div><h3>Desconto em Consultas Odontológicas</h3><p>Cuide da sua saúde bucal com preços acessíveis.</p></div>
+        <div class="benefit-item"><div class="benefit-icon"><i class="fas fa-syringe"></i></div><h3>Desconto em Procedimentos Odontológicos</h3><p>Realize os procedimentos que você precisa com desconto.</p></div>
+        <div class="benefit-item"><div class="benefit-icon"><i class="fas fa-clipboard-list"></i></div><h3>Algumas áreas de cobertura do Cartão Marffin</h3><p>Nutricionista, Fisioterapia, Psicologia, Fonoaudiologia e muito mais.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODALIDADES -->
+  <section id="modalidades-marffin">
+    <div class="section-content">
+      <h2 class="section-title animate-fadeInUp">Modalidades do Cartão Marffin</h2>
+      <p class="section-subtitle animate-fadeInUp">
+        Escolha o plano que melhor se adapta às suas necessidades e comece a aproveitar descontos em saúde hoje mesmo.
+      </p>
+      <div class="plan-cards">
+        <div class="plan-card">
+          <div class="plan-content">
+            <h3 class="plan-title">Cartão Marffin de Todos</h3>
+            <p>Desfrute de vantagens especiais para toda a família com uma mensalidade de R$ 29,90 para o titular e R$ 9,90 por dependente. Acesse uma ampla rede de profissionais de saúde qualificados e atendimento de excelência.</p>
+            <div class="plan-price"><i class="fas fa-check-circle"></i> Preço: Titular R$ 29,90 | Dependente R$ 9,90</div>
+          </div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-content">
+            <h3 class="plan-title">Cartão Marffin Empresarial</h3>
+            <p>Ideal para empresas que oferecem benefícios de saúde aos funcionários, com taxas de R$ 19,90 para o titular e R$ 9,90 por dependente. Inclui acesso a uma rede de profissionais de saúde qualificados, promovendo bem-estar e produtividade.</p>
+            <div class="plan-price"><i class="fas fa-check-circle"></i> Preço: Titular R$ 19,90 | Dependente R$ 9,90</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="sobre-container">
+      <div class="sobre-content">
+        <div class="sobre-text">
+          <h2 class="animate-fadeInUp">Sobre</h2>
+          <h3>História e Missão</h3>
+          <p>A Marffin Saúde nasceu do sonho do seu CEO, Dr. Sairon de Quadros e da necessidade de tornar a saúde acessível a todos, especialmente à população negra. Formado em Odontologia pela Universidade Luterana do Brasil, Sairon Cunha de Quadros é oriundo da periferia de Porto Alegre/RS, tendo superado todas as advercidades impostas pela vulnerabilidade social e económica desde os seus primeiros anos de vida. Sua missão é oferecer benefícios de saúde abrangentes e acessíveis, proporcionando cuidados médicos de excelência para todos os seus clientes.</p>
+          <h3>Valores e Compromissos</h3>
+          <p>Nós nos orgulhamos de nossos valores de inclusão e diversidade, refletidos em cada aspecto de nosso trabalho. Comprometemo-nos a apoiar a saúde da população negra, oferecendo soluções que respeitam suas necessidades específicas.</p>
+        </div>
+        <div class86 class="sobre-image">
+          <img src="https://marffincartoes.com.br/wp-content/uploads/2025/02/sobre.webp" alt="Sobre Marffin">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="section-content">
+      <h2 class="section-title animate-fadeInUp">Perguntas Frequentes</h2>
+      <div class="faq-item">
+        <h4>Como agendar uma consulta na plataforma? <span class="faq-plus">+</span></h4>
+        <p>Agende sua consulta online, escolhendo a especialidade e profissional desejados.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Quais os benefícios da Odontologia Preventiva? <span class="faq-plus">+</span></h4>
+        <p>Mantenha a saúde bucal com orientações personalizadas e cuidados preventivos.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Como encontrar apoio emocional para depressão? <span class="faq-plus">+</span></h4>
+        <p>Agende uma consulta com nossos especialistas em Psicologia.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Quais especialidades médicas estão disponíveis? <span class="faq-plus">+</span></h4>
+        <p>Odontologia, Medicina, Enfermagem, Psicologia, Nutrição e mais.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHATSAPP CTA -->
+  <section id="whatsapp-cta">
+    <h2 class="animate-fadeInUp" style="font-size: 32px; margin-bottom: 16px; color: #fffdfe; text-align: center;">
+      Fale com a gente agora!
+    </h2>
+    <p class="animate-fadeInUp" style="font-size: 18px; color: #e8d9d0; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto; text-align: center;">
+      Tire suas dúvidas, agende uma consulta ou saiba mais sobre a Marffin.
+    </p>
+    <a href="https://api.whatsapp.com/send/?phone=5551985186309"
+       class="btn-whatsapp animate-fadeInUp" target="_blank">
+      <i class="fab fa-whatsapp"></i> Agendar minha consulta agora
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <p class="copyright">© 2025 Marffin Saúde - Todos os direitos reservados.</p>
+      <div class="socials">
+        <a href="https://www.instagram.com/marffinsaude" target="_blank" aria-label="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/marffinodontologia" target="_blank" aria-label="Facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // CONTADOR
+    const counterElement = document.getElementById("counter");
+    let count = 0;
+    const target = 5000;
+    const increment = 25;
+    const interval = setInterval(() => {
+      count += increment;
+      if (count >= target) {
+        counterElement.textContent = target;
+        clearInterval(interval);
+      } else {
+        counterElement.textContent = count;
+      }
+    }, 20);
+
+    // FAQ
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.addEventListener('click', () => {
+        item.classList.toggle('active');
+      });
+    });
+
+    // MENU MOBILE
+    const toggle = document.querySelector('.menu-toggle');
+    const navMobile = document.querySelector('.nav-mobile');
+    const closeBtn = document.querySelector('.close-menu');
+    toggle.addEventListener('click', () => {
+      navMobile.classList.toggle('active');
+    });
+    closeBtn.addEventListener('click', () => {
+      navMobile.classList.remove('active');
+    });
+
+    // ANIMAÇÕES AO ROLAR
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+          if (entry.target.classList.contains('card') || 
+              entry.target.classList.contains('step') || 
+              entry.target.classList.contains('benefit-item') ||
+              entry.target.classList.contains('plan-card')) {
+            const delay = entry.target.style.animationDelay || '0s';
+            entry.target.style.transitionDelay = delay;
+          }
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate-fadeInUp, .card, .step, .benefit-item, .plan-card').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Delay para cards e steps
+    document.querySelectorAll('.card').forEach((card, i) => {
+      card.style.transitionDelay = `${i * 0.1}s`;
+    });
+    document.querySelectorAll('.step').forEach((step, i) => {
+      step.style.transitionDelay = `${i * 0.2}s`;
+    });
+    document.querySelectorAll('.benefit-item').forEach((item, i) => {
+      item.style.transitionDelay = `${i * 0.15}s`;
+    });
+    document.querySelectorAll('.plan-card').forEach((card, i) => {
+      card.style.transitionDelay = `${i * 0.2}s`;
+    });
+  </script>
+</body>
+</html>
