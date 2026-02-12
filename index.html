@@ -122,7 +122,7 @@
     .card {
       background: var(--card-bg); padding: 32px 24px; border-radius: var(--radius);
       box-shadow: 0 8px 25px rgba(0,0,0,0.25); transition: all 0.4s ease; color: #fff;
-      text-align: center; border: 1px solid rgba(255,255,2550.1); opacity: 0; transform: translateY(20px);
+      text-align: center; border: 1px solid rgba(255,255,255,0.1); opacity: 0; transform: translateY(20px);
     }
     .card.animate { opacity: 1; transform: translateY(0); }
     .card:hover { transform: translateY(-10px); box-shadow: 0 16px 35px rgba(0,0,0,0.35); background: #9a5b3c; }
@@ -177,7 +177,7 @@
     #modalidades-marffin .section-content { max-width: 1200px; margin: 0 auto; text-align: center; }
     #modalidades-marffin .section-title { font-size: 36px; font-weight: 800; color: #5a3825; margin-bottom: 16px; }
     #modalidades-marffin .section-subtitle { font-size: 18px; color: #6b4a30; max-width: 800px; margin: 0 auto 50px; line-height: 1.7; }
-    .plan-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 30px; margin-top: 40px; }
+    .plan-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
     .plan-card { background: #5a3825; color: white; border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 12px 30px rgba(0,0,0,0.2); transition: transform 0.3s ease; opacity: 0; transform: translateY(30px); }
     .plan-card.animate { opacity: 1; transform: translateY(0); }
     .plan-card:hover { transform: translateY(-8px); }
@@ -187,6 +187,65 @@
     .plan-content p { font-size: 16px; line-height: 1.7; margin-bottom: 20px; color: #e8d9d0; }
     .plan-price { display: flex; align-items: center; gap: 8px; font-size: 16px; color: #d4a574; margin-bottom: 8px; }
     .plan-price i { color: #d4a574; }
+
+    /* ESPECIALISTAS SECTION */
+    #especialistas { background: #f5f0e8; padding: 80px 20px 120px; }
+    #especialistas .section-content { max-width: 1200px; margin: 0 auto; text-align: center; }
+    #especialistas .section-title { font-size: 36px; font-weight: 800; color: #5a3825; margin-bottom: 16px; }
+    #especialistas .section-subtitle { font-size: 18px; color: #6b4a30; max-width: 800px; margin: 0 auto 50px; line-height: 1.7; }
+    .especialistas-grid { 
+      display: flex; 
+      flex-wrap: wrap; 
+      justify-content: center; 
+      gap: 30px; 
+      margin-top: 40px; 
+    }
+    .especialista-card { 
+      background: #ffffff; 
+      color: #333; 
+      border-radius: 20px; 
+      padding: 30px; 
+      text-align: left; 
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08); 
+      transition: all 0.3s ease; 
+      opacity: 0; 
+      transform: translateY(30px);
+      border: 1px solid #eee;
+      width: calc(33.333% - 20px);
+      min-width: 280px;
+      max-width: 360px;
+    }
+    .especialista-card.animate { opacity: 1; transform: translateY(0); }
+    .especialista-card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.12); }
+    .especialista-photo { 
+      width: 80px; 
+      height: 80px; 
+      border-radius: 50%; 
+      object-fit: cover; 
+      margin-bottom: 20px; 
+      border: 3px solid #f5f0e8;
+    }
+    .especialista-name { font-size: 22px; font-weight: 800; color: #5a3825; margin-bottom: 8px; }
+    .especialista-info { font-size: 15px; color: #666; margin-bottom: 4px; }
+    .especialista-location { font-size: 15px; color: #888; margin-bottom: 20px; }
+    .especialista-location a { color: #888; text-decoration: none; transition: 0.3s; }
+    .especialista-location a:hover { color: #9a5b3c; text-decoration: underline; }
+    .btn-especialista-whatsapp { 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 10px; 
+      background: #25D366; 
+      color: white; 
+      padding: 12px 20px; 
+      border-radius: 50px; 
+      font-weight: 700; 
+      text-decoration: none; 
+      transition: 0.3s; 
+      font-size: 16px;
+    }
+    .btn-especialista-whatsapp:hover { background: #128C7E; transform: scale(1.02); }
+
     #cartao-marffin { background: #5a3825 url('https://i.postimg.cc/HxYQ0YbF/Design-sem-nome-(9).jpg') right center/cover no-repeat; padding: 120px 5%; position: relative; }
     .cartao-content { background: rgba(90,56,37,0.9); padding: 50px; border-radius: 20px; max-width: 600px; backdrop-filter: blur(4px); }
     .cartao-logo { height: 50px; margin-bottom: 20px; }
@@ -248,10 +307,11 @@
       .steps-list::before { left: 25px; height: 350px; }
       .step { justify-content: center; }
       .como-image img { max-height: 500px; }
-      .sobre-content { grid-template-columns: 1fr; gap: 50px; text-align: center; }
+      .sobre-content { grid-template-columns: 1fr; gap: 40px; text-align: center; }
       .sobre-text { padding-right: 0; }
       .sobre-image { justify-content: center; }
       .sobre-image img { max-width: 420px; }
+      .especialista-card { width: calc(50% - 20px); }
     }
     @media (max-width: 768px) {
       .nav-desktop { display: none; }
@@ -272,6 +332,7 @@
       .benefit-icon { width: 60px; height: 60px; font-size: 28px; }
       .plan-card img { height: 180px; }
       .whatsapp-float { width: 55px; height: 55px; font-size: 28px; bottom: 20px; right: 20px; }
+      .especialista-card { width: 100%; max-width: 100%; }
     }
 
     /* ================ ALTERAÇÕES PEDIDAS - SÓ EM MOBILE ================ */
@@ -312,9 +373,6 @@
   </style>
 </head>
 <body>
-  <!-- TODO O RESTO DO TEU HTML CONTINUA EXACTAMENTE IGUAL -->
-  <!-- (não alterei nada aqui em baixo) -->
-
   <!-- BOTÃO WHATSAPP FLUTUANTE -->
   <a href="https://api.whatsapp.com/send/?phone=5551985186309" target="_blank" class="whatsapp-float">
     <i class="fab fa-whatsapp"></i>
@@ -365,9 +423,6 @@
       <a href="https://api.whatsapp.com/send/?phone=5551985186309" target="_blank" class="btn">Agendar minha consulta</a>
     </div>
   </section>
-
-  <!-- TODO O RESTO DO SITE (serviços, como funciona, cartão, etc.) CONTINUA 100% IGUAL -->
-  <!-- Não toquei em nada aqui em baixo -->
 
   <!-- SERVIÇOS -->
   <section id="servicos">
@@ -427,9 +482,6 @@
     </div>
   </section>
 
-  <!-- (Todo o resto do site continua exatamente igual até ao final) -->
-  <!-- POR QUE MARFFIN, MODALIDADES, SOBRE, FAQ, CTA, FOOTER, SCRIPT... tudo igual -->
-
   <!-- POR QUE MARFFIN -->
   <section id="por-que-marffin">
     <div class="section-content">
@@ -469,6 +521,66 @@
     </div>
   </section>
 
+  <!-- ESPECIALISTAS DISPONÍVEIS -->
+  <section id="especialistas">
+    <div class="section-content">
+      <h2 class="section-title animate-fadeInUp">Nossos Profissionais</h2>
+      <p class="section-subtitle animate-fadeInUp">
+        Conheça alguns dos profissionais qualificados prontos para atender você.
+      </p>
+      <div class="especialistas-grid">
+        <!-- Especialista 1 -->
+        <div class="especialista-card animate">
+          <img src="https://i.postimg.cc/FvG2V0yV/Design-sem-nome-(2).png" alt="Karin Silva" class="especialista-photo">
+          <h3 class="especialista-name">Karin Silva</h3>
+          <p class="especialista-info">CRP 07/400.60 - Psicologia</p>
+          <p class="especialista-location">
+            <a href="https://www.instagram.com/_psicokarin" target="_blank">@_psicokarin</a>
+          </p>
+          <a href="https://api.whatsapp.com/send/?phone=5551985186309&text=Ola%20quero%20agendar%20uma%20consulta%20com%20a%20Karin%20Silva" target="_blank" class="btn-especialista-whatsapp">
+            <i class="fab fa-whatsapp"></i> Agendar Consulta
+          </a>
+        </div>
+        <!-- Especialista 2 -->
+        <div class="especialista-card animate">
+          <img src="https://i.postimg.cc/vmT73kJQ/Design-sem-nome-(3).png" alt="Handressa Silva" class="especialista-photo">
+          <h3 class="especialista-name">Handressa Silva</h3>
+          <p class="especialista-info">CRP 07/231.53 - Psicologia</p>
+          <p class="especialista-location">
+            <a href="https://www.instagram.com/psic.handressasilva" target="_blank">@psic.handressasilva</a>
+          </p>
+          <a href="https://api.whatsapp.com/send/?phone=5551985186309&text=Ola%20quero%20agendar%20uma%20consulta%20com%20a%20Handressa%20Silva" target="_blank" class="btn-especialista-whatsapp">
+            <i class="fab fa-whatsapp"></i> Agendar Consulta
+          </a>
+        </div>
+        <!-- Especialista 3 -->
+        <div class="especialista-card animate">
+          <img src="https://i.postimg.cc/xTL6mrQV/Design-sem-nome-(4).png" alt="Franciele Alves" class="especialista-photo">
+          <h3 class="especialista-name">Franciele Alves</h3>
+          <p class="especialista-info">CRN 19958 - Nutricionista</p>
+          <p class="especialista-location">
+            <a href="https://www.instagram.com/franalves.nutricionista" target="_blank">@franalves.nutricionista</a>
+          </p>
+          <a href="https://api.whatsapp.com/send/?phone=5551985186309&text=Ola%20quero%20agendar%20uma%20consulta%20com%20a%20Franciele%20Alves" target="_blank" class="btn-especialista-whatsapp">
+            <i class="fab fa-whatsapp"></i> Agendar Consulta
+          </a>
+        </div>
+        <!-- Especialista 4 -->
+        <div class="especialista-card animate">
+          <img src="https://i.postimg.cc/mgwVdQh8/Design-sem-nome-(5).png" alt="Jéssyca Barcellos" class="especialista-photo">
+          <h3 class="especialista-name">Jéssyca Barcellos</h3>
+          <p class="especialista-info">CRP 07/27864 - Psicóloga</p>
+          <p class="especialista-location">
+            <a href="https://www.instagram.com/jessybarcellos" target="_blank">@jessybarcellos</a>
+          </p>
+          <a href="https://api.whatsapp.com/send/?phone=5551985186309&text=Ola%20quero%20agendar%20uma%20consulta%20com%20a%20J%C3%A9ssyca%20Barcellos" target="_blank" class="btn-especialista-whatsapp">
+            <i class="fab fa-whatsapp"></i> Agendar Consulta
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- SOBRE -->
   <section id="sobre">
     <div class="sobre-container">
@@ -478,10 +590,10 @@
           <h3>História e Missão</h3>
           <p>A Marffin Saúde nasceu do sonho do seu CEO, Dr. Sairon de Quadros e da necessidade de tornar a saúde acessível a todos, especialmente à população negra. Formado em Odontologia pela Universidade Luterana do Brasil, Sairon Cunha de Quadros é oriundo da periferia de Porto Alegre/RS, tendo superado todas as advercidades impostas pela vulnerabilidade social e económica desde os seus primeiros anos de vida. Sua missão é oferecer benefícios de saúde abrangentes e acessíveis, proporcionando cuidados médicos de excelência para todos os seus clientes.</p>
           <h3>Valores e Compromissos</h3>
-          <p>Nós nos orgulhamos de nossos valores de inclusão e diversidade, refletidos em cada aspecto de nosso trabalho. Comprometemo-nos a apoiar a saúde da população negra, oferecendo soluções que respeitam suas necessidades específicas.</p>
+          <p>Nós nos orgulhamos de nossos valores de inclusão e diversidade, refletidos em cada aspecto de nosso trabalho. Comprometemo-nos a apoiar a saúde da population negra, oferecendo soluções que respeitam suas necessidades específicas.</p>
         </div>
         <div class="sobre-image">
-          <img src="https://marffincartoes.com.br/wp-content/uploads/2025/02/sobre.webp" alt="Sobre Marffin">
+          <img src="https://i.postimg.cc/xCCtWqB3/Design-sem-nome-(8).png" alt="Sobre Marffin">
         </div>
       </div>
     </div>
@@ -580,7 +692,8 @@
           if (entry.target.classList.contains('card') ||
               entry.target.classList.contains('step') ||
               entry.target.classList.contains('benefit-item') ||
-              entry.target.classList.contains('plan-card')) {
+              entry.target.classList.contains('plan-card') ||
+              entry.target.classList.contains('especialista-card')) {
             const delay = entry.target.style.animationDelay || '0s';
             entry.target.style.transitionDelay = delay;
           }
@@ -588,7 +701,7 @@
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.animate-fadeInUp, .card, .step, .benefit-item, .plan-card').forEach(el => {
+    document.querySelectorAll('.animate-fadeInUp, .card, .step, .benefit-item, .plan-card, .especialista-card').forEach(el => {
       observer.observe(el);
     });
 
@@ -604,6 +717,9 @@
     });
     document.querySelectorAll('.plan-card').forEach((card, i) => {
       card.style.transitionDelay = `${i * 0.2}s`;
+    });
+    document.querySelectorAll('.especialista-card').forEach((card, i) => {
+      card.style.transitionDelay = `${i * 0.15}s`;
     });
   </script>
 </body>
